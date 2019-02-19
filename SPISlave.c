@@ -23,6 +23,8 @@ void ConfigPeriph(void);
 #define _XTAL_FREQ   32000000L
 
 unsigned int count;
+int state = 0;
+unsigned char command;
 
 void main(void) {
     long i;
@@ -93,6 +95,9 @@ void __interrupt(high_priority) HighIsr(void) {
     //Check the source of the interrupt
     if (SSP2IF) {
         //Handle SPI interrupt here
+        unsigned char rx = SSP2BUF;  //Always need to read the buffer       
+        
+        //State machine goes here
         
         SSP2IF = 0;
     }
