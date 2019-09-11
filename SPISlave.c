@@ -23,11 +23,13 @@ void ConfigPeriph(void);
 #define _XTAL_FREQ   32000000L
 
 unsigned int count;
+unsigned int knob;
+
+//The variables below can be used by the state machine
 int state = 0;
 unsigned char command;
 
 void main(void) {
-    long i;
     count = 0;
     OSCTUNEbits.PLLEN = 1;
     LCDInit();
@@ -38,7 +40,10 @@ void main(void) {
     while (1) {
         lprintf(0, "%d", count);
         __delay_ms(1000);
+        
+        //Update the count and the knob values each second
         ++count;
+        knob = ReadPot();
     }
 }
 
